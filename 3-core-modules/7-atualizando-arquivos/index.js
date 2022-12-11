@@ -14,7 +14,9 @@ const server = http.createServer((req, res) => {
             return res.end()
         })
     } else {
-        fs.writeFile('nome.txt', name, (err, data) => {
+        const nameNewLine = name + ',\r\n'
+
+        fs.appendFile('nomes.txt', nameNewLine, (err, data) => {
             res.writeHead(302, {
                 Location: '/',
             })
