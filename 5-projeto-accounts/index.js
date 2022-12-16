@@ -22,7 +22,7 @@ function operation() {
         } else if (action === 'Consultar Saldo') {
             getAccountBalance()
         } else if (action === 'Sacar') {
-
+            withdraw()
         } else if (action === 'Sair') {
             console.log(chalk.bgBlue.black('Obrigado por usar o Accounts!'))
 
@@ -154,6 +154,26 @@ function getAccountBalance() {
         const accountData = getAccount(accountName)
 
         console.log(chalk.bgBlue.black(`O saldo da sua conta de nome ${accountName} é de R$${accountData.balance}.`))
+
+        operation()
+    })
+        .catch(err => console.log)
+}
+
+function withdraw() {
+    inquirer.prompt([
+        {
+            name: 'accountName',
+            message: 'Qual o nome da conta?'
+        }
+    ]).then(answer => {
+        const accountName = answer['accountName']
+
+        if (!checkAccount(accountName)) {
+            return withdraw()
+        }
+
+        const accountData = getAccount(accountName)
 
         operation()
     })
