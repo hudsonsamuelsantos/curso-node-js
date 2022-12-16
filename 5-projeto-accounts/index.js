@@ -10,7 +10,7 @@ function operation() {
             type: 'list',
             name: 'action',
             message: 'O que você deseja fazer?',
-            choices: ['Criar conta', 'Consultar saldo', 'Depositar', 'Sacar', 'Sair']
+            choices: ['Criar conta', 'Consultar Saldo', 'Depositar', 'Sacar', 'Sair']
         }
     ]).then(answer => {
         const action = answer['action']
@@ -20,7 +20,7 @@ function operation() {
         } else if (action === 'Depositar') {
             deposit()
         } else if (action === 'Consultar Saldo') {
-
+            getAccountBalance()
         } else if (action === 'Sacar') {
 
         } else if (action === 'Sair') {
@@ -136,4 +136,26 @@ function getAccount(accountName) {
     })
 
     return JSON.parse(accountJSON)
+}
+
+function getAccountBalance() {
+    inquirer.prompt([
+        {
+            name: 'accountName',
+            message: 'Qual o nome da conta?'
+        }
+    ]).then(answer => {
+        const accountName = answer['accountName']
+
+        if (!checkAccount(accountName)) {
+            return getAccountBalance()
+        }
+
+        const accountData = getAccount(accountName)
+
+        console.log(chalk.bgBlue.black(`O saldo da sua conta de nome ${accountName} é de R$${accountData.balance}.`))
+
+        operation()
+    })
+        .catch(err => console.log)
 }
