@@ -85,6 +85,20 @@ function deposit() {
             if (!checkAccount(accountName)) {
                 return deposit()
             }
+
+            inquirer.prompt([
+                {
+                    name: 'amount',
+                    message: 'Quanto você deseja depositar?'
+                }
+            ]).then(answer => {
+                const amount = answer['amount']
+
+                addAmount(accountName, amount)
+                operation()
+            })
+                .catch(err => console.log(err))
+
         })
         .catch(err => console.log(err))
 }
@@ -97,4 +111,29 @@ function checkAccount(accountName) {
     }
 
     return true
+}
+
+function addAmount(accountName, amount) {
+    const accountData = getAccount(accountName)
+
+    if (!amount) {
+        console.log(chalk.bgRed.black('Ocorreu um erro, tente novamente!'))
+
+        return deposit()
+    }
+
+    accountData.balance = parseFloat(amount) + parseFloat(accountData.balance)
+
+    fs.writeFileSync(`accounts/${accountName}.json`, JSON.stringify(accountData), err => console.log(err))
+
+    console.log(chalk.green(`Foi depositado o valor de R$${amount} na sua conta!`))
+}
+
+function getAccount(accountName) {
+    const accountJSON = fs.readFileSync(`accounts/${accountName}.json`, {
+        encoding: 'utf8',
+        flag: 'r'
+    })
+
+    return JSON.parse(accountJSON)
 }
