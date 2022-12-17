@@ -208,4 +208,6 @@ function removeAmount(accountName, amount) {
     fs.writeFileSync(`accounts/${accountName}.json`, JSON.stringify(accountData), err => console.log(err))
 
     console.log(chalk.green(`Foi realizado um saque de R$${amount} da sua conta! Você ainda possui R$${parseFloat(accountData.balance)}!`))
+
+    return operation()
 }
