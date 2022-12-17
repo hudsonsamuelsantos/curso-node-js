@@ -173,9 +173,39 @@ function withdraw() {
             return withdraw()
         }
 
-        const accountData = getAccount(accountName)
+        inquirer.prompt([
+            {
+                name: "amount",
+                message: "Qaunto você deseja sacar?"
+            }
+        ]).then(answer => {
+            const amount = answer['amount']
 
-        operation()
+            removeAmount(accountName, amount)
+        })
+            .catch(err => console.log(err))
     })
         .catch(err => console.log)
+}
+
+function removeAmount(accountName, amount) {
+    const accountData = getAccount(accountName)
+
+    if (!amount) {
+        console.log(chalk.bgRed.black('Ocorreu um erro, tente novamente!'))
+
+        return withdraw()
+    }
+
+    if (accountData.balance < amount) {
+        console.log(chalk.bgRed.black('Valor indisponível!'))
+
+        return withdraw()
+    }
+
+    accountData.balance = parseFloat(accountData.balance) - parseFloat(amount)
+
+    fs.writeFileSync(`accounts/${accountName}.json`, JSON.stringify(accountData), err => console.log(err))
+
+    console.log(chalk.green(`Foi realizado um saque de R$${amount} da sua conta! Você ainda possui R$${parseFloat(accountData.balance)}!`))
 }
