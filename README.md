@@ -7,3 +7,6 @@ As principais tecnologias e ferramentas utilizadas até agora foram:
 - Node.js
 - Npm
 - Express
+- Handlebars como Template Engine
+- MySQL como Banco de dados relacional
+- Sequelize como ORM
