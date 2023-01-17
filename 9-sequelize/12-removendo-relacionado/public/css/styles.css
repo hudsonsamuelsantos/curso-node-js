@@ -17,6 +17,12 @@
 
 #navbar ul li {
     margin-left: 1em;
+    text-decoration: none;
+}
+
+#navbar ul li a {
+    text-decoration: none;
+    color: #000;
 }
 
 h1 {
@@ -58,6 +64,7 @@ h1 {
     max-width: 1200px;
     margin: 0 auto;
     gap: 10px;
+    padding: 1em;
 }
 
 .container .item {
@@ -108,6 +115,9 @@ h1 {
     margin: 1em auto;
     padding-top: 1em;
     border-top: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .address-container h2 {
@@ -115,7 +125,7 @@ h1 {
 }
 
 .address-container form {
-    width: 300px;
+    width: 450px;
 }
 
 .address-list {
@@ -123,10 +133,15 @@ h1 {
     padding-top: 1em;
     border-top: 1px solid #ccc;
     padding-bottom: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .address-list div {
     display: flex;
+    width: 450px;
+    justify-content: space-between;
     margin-bottom: 1em;
     padding-bottom: 1em;
     border-bottom: 1px solid #ddd;
@@ -134,4 +149,5 @@ h1 {
 
 .address-list form {
     margin-left: 1em;
+    width: fit-content;
 }
